@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meteo Dinamico</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    input, button { padding: 10px; font-size: 1rem; margin-top: 10px; }
+    #result { margin-top: 20px; font-size: 1.2rem; color: #007acc; }
+  </style>
+</head>
+<body>
+
+  <h1>Verifica il meteo della tua città</h1>
+
+  <input type="text" id="cityInput" placeholder="Inserisci città" />
+  <button id="checkBtn">Controlla meteo</button>
+
+  <div id="result"></div>
+
+  <script>
+    const apiKey = "7f502e9815c084034b3e9f262e79d7a5";  // <-- Metti qui la tua API key OpenWeatherMap
+
+
+    const btn = document.getElementById('checkBtn');
+    const cityInput = document.getElementById('cityInput');
+    const resultDiv = document.getElementById('result');
+
+    btn.addEventListener('click', () => {
+      const city = cityInput.value.trim();
+      if (!city) {
+        resultDiv.textContent = "Per favore, inserisci il nome di una città.";
+        return;
+      }
+
+      // URL API per meteo (temperatura in gradi Celsius)
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=it`;
+
+      resultDiv.textContent = "Caricamento...";
+
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error("Città non trovata");
+          return response.json();
+        })
+        .then(data => {
+          const temp = data.main.temp;
+          const desc = data.weather[0].description;
+          resultDiv.innerHTML = `A <strong>${city}</strong> ci sono ${temp}°C con <em>${desc}</em>.`;
+        })
+        .catch(error => {
+          resultDiv.textContent = "Errore: " + error.message;
+        });
+    });
+  </script>
+
+</body>
+</html>
