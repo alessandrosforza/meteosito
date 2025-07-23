@@ -4,50 +4,120 @@
   <meta charset="UTF-8" />
   <title>Meteo Dinamico Completo</title>
   <style>
+  /* Reset base */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #72edf2 10%, #5151e5 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-shadow: 0 0 5px rgba(0,0,0,0.3);
+  }
+
+  #weatherForm {
+    background: rgba(255,255,255,0.15);
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  input, button {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 10px;
+  }
+
+  input {
+    flex: 1 1 200px;
+    min-width: 150px;
+  }
+
+  button {
+    background-color: #1de9b6;
+    color: #004d40;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1 1 120px;
+    min-width: 100px;
+  }
+
+  button:hover {
+    background-color: #00bfa5;
+  }
+
+  #result {
+    margin-top: 2rem;
+    background: rgba(255,255,255,0.15);
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  #icon {
+    display: block;
+    margin: 1rem auto 0;
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
     body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-      background: #e0f7fa;
-      color: #00796b;
+      padding: 1rem;
     }
+
     h1 {
-      text-align: center;
+      font-size: 2rem;
     }
+
     #weatherForm {
-      text-align: center;
-      margin-bottom: 20px;
+      flex-direction: column;
+      gap: 0.8rem;
     }
+
     input, button {
-      padding: 10px;
-      font-size: 1rem;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
+      flex: 1 1 100%;
+      min-width: unset;
     }
-    input {
-      width: 200px;
-    }
-    button {
-      background-color: #00796b;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #004d40;
-    }
+
     #result {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-top: 20px;
+      font-size: 1rem;
+      padding: 1rem 1.2rem;
     }
+
     #icon {
-      display: block;
-      margin: 10px auto;
-      width: 100px;
-      height: 100px;
+      width: 90px;
+      height: 90px;
     }
-  </style>
+  }
+</style>
+
 </head>
 <body>
 
