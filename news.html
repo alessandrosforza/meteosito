@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>News</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .article {
+      margin-bottom: 20px;
+    }
+    .article h3 {
+      margin: 0 0 5px;
+    }
+    .article p {
+      margin: 0 0 5px;
+    }
+    hr {
+      border: none;
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ultime News</h1>
+  <a href="index.html">← Torna alla Home</a>
+
+  <div id="news-container">Caricamento news...</div>
+
+  <script>
+    const apiKey = 'b38c576c321c4390bcf9dc34fd9a3ef8'; // Prendi la tua API key da https://newsapi.org/
+    const url = `https://newsapi.org/v2/top-headlines?country=it&apiKey=${apiKey}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('news-container');
+        container.innerHTML = ''; // svuota caricamento
+
+        if (data.status !== "ok") {
+          container.textContent = 'Errore nel caricamento delle news.';
+          return;
+        }
+
+        if (!data.articles.length) {
+          container.textContent = 'Nessuna news trovata.';
+          return;
+        }
+
+        data.articles.forEach(article => {
+          const div = document.createElement('div');
+          div.className = 'article';
+          div.innerHTML = `
+            <h3>${article.title}</h3>
+            <p>${article.description || ''}</p>
+            <a href="${article.url}" target="_blank" rel="noopener noreferrer">Leggi di più</a>
+            <hr/>
+          `;
+          container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('news-container').textContent = 'Errore nel caricamento delle news.';
+      });
+  </script>
+</body>
+</html>
