@@ -2,25 +2,66 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <title>Meteo Dinamico</title>
+  <title>Meteo Dinamico Completo</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-    input, button { padding: 10px; font-size: 1rem; margin-top: 10px; }
-    #result { margin-top: 20px; font-size: 1.2rem; color: #007acc; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #e0f7fa;
+      color: #00796b;
+    }
+    h1 {
+      text-align: center;
+    }
+    #weatherForm {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+    }
+    input {
+      width: 200px;
+    }
+    button {
+      background-color: #00796b;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+    #result {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+    #icon {
+      display: block;
+      margin: 10px auto;
+      width: 100px;
+      height: 100px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Verifica il meteo della tua città</h1>
+  <h1>Meteo Dinamico Completo</h1>
 
-  <input type="text" id="cityInput" placeholder="Inserisci città" />
-  <button id="checkBtn">Controlla meteo</button>
+  <div id="weatherForm">
+    <input type="text" id="cityInput" placeholder="Inserisci città" />
+    <button id="checkBtn">Controlla meteo</button>
+  </div>
 
   <div id="result"></div>
 
   <script>
-    const apiKey = "7f502e9815c084034b3e9f262e79d7a5";  // <-- Metti qui la tua API key OpenWeatherMap
-
+    const apiKey = "LA_TUA_API_KEY"; // Metti qui la tua API key
 
     const btn = document.getElementById('checkBtn');
     const cityInput = document.getElementById('cityInput');
@@ -33,10 +74,9 @@
         return;
       }
 
-      // URL API per meteo (temperatura in gradi Celsius)
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=it`;
 
-      resultDiv.textContent = "Caricamento...";
+      resultDiv.innerHTML = "Caricamento...";
 
       fetch(url)
         .then(response => {
@@ -45,8 +85,17 @@
         })
         .then(data => {
           const temp = data.main.temp;
+          const wind = data.wind.speed;
+          const humidity = data.main.humidity;
           const desc = data.weather[0].description;
-          resultDiv.innerHTML = `A <strong>${city}</strong> ci sono ${temp}°C con <em>${desc}</em>.`;
+          const iconCode = data.weather[0].icon;
+
+          resultDiv.innerHTML = `
+            <p>A <strong>${city}</strong> ci sono ${temp}°C con <em>${desc}</em>.</p>
+            <p>Vento: ${wind} m/s</p>
+            <p>Umidità: ${humidity}%</p>
+            <img id="icon" src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="Icona meteo" />
+          `;
         })
         .catch(error => {
           resultDiv.textContent = "Errore: " + error.message;
